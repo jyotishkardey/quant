@@ -12,22 +12,23 @@ def is_uptrend(data):
 # Function to check RSI
 def check_rsi(data):
     rsi = talib.RSI(data['Close'], timeperiod=14)
-    return 50 < rsi[-1] < 80
+    return 50 < rsi.iloc[-1] < 80
 
 # Function to check MACD buy signal
 def check_macd(data):
     macd, macdsignal, macdhist = talib.MACD(data['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
-    return macd[-1] > macdsignal[-1]
+    return macd.iloc[-1] > macdsignal.iloc[-1]
 
-# Get list of Nifty 500 stocks (assuming this list is available)
-nifty_500_stocks = ['RELIANCE.NS']  # Add all Nifty 500 stocks here
 
 
 # Filter stocks based on criteria
 def main():
-    read_csv('../ind_nifty500list.csv','Symbol')
+    i = 0
+    nifty_500_stocks = read_csv('../ind_nifty500list.csv','Symbol','.NS')
     filtered_stocks = []
     for stock in nifty_500_stocks:
+        i += 1
+        print("Analysing " + str(i) + "  "+ stock + " ...")
         ticker =  yf.Ticker(stock)
         data = ticker.history(period='1mo')
         if is_uptrend(data) and check_rsi(data) and check_macd(data):
