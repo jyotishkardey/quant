@@ -31,9 +31,13 @@ def main():
         print("Analysing " + str(i) + "  "+ stock + " ...")
         ticker =  yf.Ticker(stock)
         data = ticker.history(period='1mo')
-        if is_uptrend(data) and check_rsi(data) and check_macd(data):
+        if is_uptrend(data) and check_rsi(data):# and check_macd(data):
             filtered_stocks.append(stock)
 
-    print("Filtered Stocks:", filtered_stocks)
+    print("==============RESULTS==========")
+    i = 0
+    for stock in filtered_stocks:
+        i += 1
+        print("Analysing " + str(i) + "  "+ stock + " ...")
 
 main()
