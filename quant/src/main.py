@@ -4,6 +4,7 @@ import talib
 
 #Utility APIS
 from csv_utils import *
+from whatsApp  import *
 
 # Function to check if the stock is in uptrend for the last 15 days
 def is_uptrend(data):
@@ -23,6 +24,8 @@ def check_macd(data):
 
 # Filter stocks based on criteria
 def main():
+    messageBody = ""
+    output = ""
     i = 0
     nifty_500_stocks = read_csv('../ind_nifty500list.csv','Symbol','.NS')
     filtered_stocks = []
@@ -38,6 +41,10 @@ def main():
     i = 0
     for stock in filtered_stocks:
         i += 1
-        print("Analysing " + str(i) + "  "+ stock + " ...")
+        print (str(i) + ".  " + stock)
+        messageBody += str(i) + "  " + str(stock) + "\n"
+        if(len(messageBody) > 1000):
+            sendWhatsAppNotification(messageBody)
+            messageBody = ""
 
 main()
