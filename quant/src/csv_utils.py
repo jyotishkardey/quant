@@ -18,9 +18,14 @@ def read_csv(file, column, suffix):
     return ret
 
 
-def dump_csv(stocks):
+def generate_csv(stocks):
+    frequency = []
     # Create a DataFrame from the list
     df = pd.DataFrame(stocks, columns=["Stocks"])
+
+    # Frequency counts of the 'Fruits' column
+    frequency = df['Stocks'].value_counts()
+    df['Frequency'] = frequency[1]
 
     # Write the DataFrame to a file
     df.to_csv(output_file, index=False, header=True)

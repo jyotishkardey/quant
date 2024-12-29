@@ -93,6 +93,6 @@ def main():
             sendWhatsAppNotification(messageBody)
             messageBody = ""
 
-    dump_csv(filtered_stocks)
+    generate_csv(filtered_stocks)
 
 main()
