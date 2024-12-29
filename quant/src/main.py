@@ -49,8 +49,17 @@ def compare_moving_average(data):
     else:
         return False
 
+def check_beta(ticker):
+    key_to_check = 'beta' 
+    if key_to_check not in ticker.info:
+        return False
+    return ticker.info['beta'] < 1
+
 def factor_momentum(data):
     return is_uptrend(data) and check_rsi(data) and check_macd(data) and check_adx(data) and is_obv_increasing(data) and compare_moving_average(data)
+
+def factor_volatility(data):
+    return check_beta(data)
 
 # Filter stocks based on criteria
 def main():
@@ -70,7 +79,7 @@ def main():
         ticker =  yf.Ticker(stock)
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
-        if factor_momentum(data):
+        if factor_momentum(data) and factor_volatility(ticker):
             filtered_stocks.append(stock)
 
     print("==============RESULTS==========")
@@ -79,10 +88,8 @@ def main():
         i += 1
         print (str(i) + ".  " + stock)
         messageBody += str(i) + "  " + str(stock) + "\n"
-        '''
         #Send WhatsApp alert
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody)
             messageBody = ""
-        '''
 main()
