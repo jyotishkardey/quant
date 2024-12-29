@@ -4,6 +4,12 @@ from datetime import date
 
 output_file = "../output.csv"
 
+import pandas as pd
+
+def read_csv_column(file_path, column_name):
+    df = pd.read_csv(file_path)
+    return df[column_name].tolist()
+
 def get_current_date():
     # Get the current date
     return date.today()
@@ -29,24 +35,29 @@ def update_frequencies(stocks):
     if not os.path.exists(output_file):
         generate_New_csv(stocks)
     else:
-        # Load the CSV file into a DataFrame
-        df = pd.read_csv(output_file)
-        # Convert the DataFrame to a dictionary
-        data_dict = df.to_dict(orient='records')
-        print("--------")
-        print(data_dict)
-        '''
-        if str(data_dict['Date']) == str(get_current_date()):
+        stock_column = read_csv_column(output_file,'Stocks')
+        frequency_column = read_csv_column(output_file,'Frequency')
+
+        stock_dict = {}
+        i = 0
+        for stock in stock_column:
+            stock_dict[stock] = frequency_column[i]
+            i+= 1
+
+        if str(stock_dict['Date']) == str(get_current_date()):
             return;
         else:
             data_dict['Date'] = get_current_date()
-        '''
-        for i in stocks:
-            if i in data_dict and i != 'Date':
-                data_dict[i] += 1
-        df.to_csv(output_file, index=False, header=True)
         
-
+        for i in stocks:
+            if i != 'Date':
+                #import pdb;pdb.set_trace()
+                stock_dict[i] = int(stock_dict[i]) +int(1)
+                print(i)
+                print(stock_dict[i])
+        print(stock_dict)
+        df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Frequency' :stock_dict.values()})
+        df.to_csv(output_file, index=False, header=True)
 
 def generate_New_csv(in_stocks):
     stocks = in_stocks.copy()
