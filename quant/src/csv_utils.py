@@ -51,11 +51,8 @@ def update_frequencies(stocks):
         
         for i in stocks:
             if i != 'Date':
-                #import pdb;pdb.set_trace()
                 stock_dict[i] = int(stock_dict[i]) +int(1)
-                print(i)
-                print(stock_dict[i])
-        print(stock_dict)
+        
         df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
