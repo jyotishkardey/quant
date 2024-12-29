@@ -35,7 +35,9 @@ def is_obv_increasing(data):
     # Get the last 5 elements
     last_few =data['OBV_Diff'][-1:]
     # Check if the OBV is increasing (most recent difference is positive)
-    return all(x > 0 for x in last_few) 
+    #return all(x > 0 for x in last_few)
+    #Check if current OBV is greater than 15 days earlier's OBV
+    return data['OBV'].iloc[-1] > data['OBV'].iloc[-15]
 
 def compare_moving_average(data):
     # Calculate the 50-day and 200-day moving averages
