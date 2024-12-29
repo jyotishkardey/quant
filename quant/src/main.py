@@ -58,8 +58,8 @@ def check_beta(ticker):
 def factor_momentum(data):
     return is_uptrend(data) and check_rsi(data) and check_macd(data) and check_adx(data) and is_obv_increasing(data) and compare_moving_average(data)
 
-def factor_volatility(data):
-    return check_beta(data)
+def factor_volatility(ticker):
+    return check_beta(ticker)
 
 # Filter stocks based on criteria
 def main():
