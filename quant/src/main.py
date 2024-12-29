@@ -92,7 +92,6 @@ def main():
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody)
             messageBody = ""
-
-    generate_csv(filtered_stocks)
+    update_frequencies(filtered_stocks)
 
 main()
