@@ -21,7 +21,12 @@ def check_macd(data):
     macd, macdsignal, macdhist = talib.MACD(data['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
     return macd.iloc[-1] > macdsignal.iloc[-1]
 
+def check_adx(data):
+    data['ADX'] = talib.ADX(data['High'], data['Low'], data['Close'], timeperiod=14)
+    return data['ADX'].iloc[-1] > 20
 
+def factor_momentum(data):
+    return is_uptrend(data) and check_rsi(data) and check_macd(data) and check_adx(data)
 
 # Filter stocks based on criteria
 def main():
@@ -41,7 +46,7 @@ def main():
         ticker =  yf.Ticker(stock)
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
-        if is_uptrend(data) and check_rsi(data) and check_macd(data):
+        if factor_momentum(data):
             filtered_stocks.append(stock)
 
     print("==============RESULTS==========")
