@@ -9,7 +9,7 @@ from whatsApp  import *
 
 # Function to check if the stock is in uptrend for the last week, 15 days and 1 month
 def is_uptrend(data):
-    return len(data['Close']) > 50 and data['Close'].iloc[-1] > data['Close'].iloc[-25]  and data['Close'].iloc[-1] > data['Close'].iloc[-5] and data['Close'].iloc[-15]
+    return len(data['Close']) > 50 and data['Close'].iloc[-1] > data['Close'].iloc[-5]  and data['Close'].iloc[-5] > data['Close'].iloc[-15] and data['Close'].iloc[-15] > data['Close'].iloc[-25]
 
 # Function to check RSI
 def check_rsi(data):
@@ -23,7 +23,7 @@ def check_macd(data):
 
 def check_adx(data):
     data['ADX'] = talib.ADX(data['High'], data['Low'], data['Close'], timeperiod=14)
-    return data['ADX'].iloc[-1] > 15
+    return data['ADX'].iloc[-1] > 12
 
 def is_obv_increasing(data):
     # Calculate OBV
@@ -56,7 +56,7 @@ def check_beta(ticker):
     return ticker.info['beta'] < 1
 
 def factor_momentum(data):
-    return is_uptrend(data) and check_rsi(data) and check_macd(data) and check_adx(data) and is_obv_increasing(data) and compare_moving_average(data)
+    return is_uptrend(data) and check_rsi(data) and check_macd(data) and is_obv_increasing(data) and compare_moving_average(data) and check_adx(data)
 
 def factor_volatility(ticker):
     return check_beta(ticker)
@@ -79,7 +79,7 @@ def main():
         ticker =  yf.Ticker(stock)
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
-        if factor_momentum(data) and factor_volatility(ticker):
+        if factor_momentum(data): #and factor_volatility(ticker):
             filtered_stocks.append(stock)
 
     print("==============RESULTS==========")
