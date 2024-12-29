@@ -1,14 +1,15 @@
 import yfinance as yf
 import pandas as pd
 import talib
+from datetime import datetime
 
 #Utility APIS
 from csv_utils import *
 from whatsApp  import *
 
-# Function to check if the stock is in uptrend for the last 15 days
+# Function to check if the stock is in uptrend for the last week, 15 days and 1 month
 def is_uptrend(data):
-    return data['Close'].iloc[-1] > data['Close'].iloc[0]
+    return len(data['Close']) > 50 and data['Close'].iloc[-1] > data['Close'].iloc[-25]  and data['Close'].iloc[-1] > data['Close'].iloc[-5] and data['Close'].iloc[-15]
 
 # Function to check RSI
 def check_rsi(data):
@@ -29,12 +30,18 @@ def main():
     i = 0
     nifty_500_stocks = read_csv('../ind_nifty500list.csv','Symbol','.NS')
     filtered_stocks = []
+
+    #Get 1 year time frame
+    end_date = datetime.now()
+    start_date = end_date - pd.DateOffset(years=1)
+
     for stock in nifty_500_stocks:
         i += 1
         print("Analysing " + str(i) + "  "+ stock + " ...")
         ticker =  yf.Ticker(stock)
-        data = ticker.history(period='1mo')
-        if is_uptrend(data) and check_rsi(data):# and check_macd(data):
+        #Get 1 year data
+        data = ticker.history(interval='1d', start=start_date, end=end_date)
+        if is_uptrend(data) and check_rsi(data) and check_macd(data):
             filtered_stocks.append(stock)
 
     print("==============RESULTS==========")
@@ -43,8 +50,10 @@ def main():
         i += 1
         print (str(i) + ".  " + stock)
         messageBody += str(i) + "  " + str(stock) + "\n"
+        '''
+        #Send WhatsApp alert
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody)
             messageBody = ""
-
+        '''
 main()
