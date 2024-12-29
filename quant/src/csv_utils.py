@@ -1,5 +1,7 @@
 import pandas as pd
 
+output_file = "../output.csv"
+
 def read_csv(file, column, suffix):
     ret = []
     # Read the CSV file
@@ -14,5 +16,13 @@ def read_csv(file, column, suffix):
         ret.append(stock_suffixed)
     
     return ret
+
+
+def dump_csv(stocks):
+    # Create a DataFrame from the list
+    df = pd.DataFrame(stocks, columns=["Stocks"])
+
+    # Write the DataFrame to a file
+    df.to_csv(output_file, index=False, header=True)
 
 

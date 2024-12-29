@@ -92,4 +92,7 @@ def main():
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody)
             messageBody = ""
+
+    dump_csv(filtered_stocks)
+
 main()
