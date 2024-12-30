@@ -97,9 +97,12 @@ def analyze_stoks():
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
             messageBody = ""
-    update_frequencies(filtered_stocks, filtered_sector, output_file)
+    update_frequencies(filtered_stocks, filtered_sector, stocks_output_file)
 
-def analyze_mutual_funds():    
+def analyze_mutual_funds():
+    columns = ['Date']
+    result    = []
+    columns.append(fund_names)
     #Get 1 year time frame
     end_date = datetime.now()
     start_date = end_date - pd.DateOffset(years=1)
@@ -115,19 +118,24 @@ def analyze_mutual_funds():
         # Calculate percetage daily returns and round it to 2 decimal places
         data['Daily_Return'] = round(data['Close'].pct_change() * 100, 2)
         
-        # The Date column might not be explicitly present in the DataFrame. 
-        # Instead, the Date is likely part of the DataFrame index
-        # Reset index to access Date column
-        data.reset_index(inplace=True)
+        if i == 1:
+            # The Date column might not be explicitly present in the DataFrame. 
+            # Instead, the Date is likely part of the DataFrame index
+            # Reset index to access Date column
+            data.reset_index(inplace=True)
 
-        # Display the daily returns
-        datetime_str = str(data['Date'][-1:])
-        date = datetime_str.split()
+            # Display the daily returns
+            datetime_str = str(data['Date'][-1:])
+            date = datetime_str.split()
+            result.append(date[1])
 
-        # Print the formatted date
-        print(fund_names[i-1])
-        print(date[1])
-        print(data['Daily_Return'][-1:])
+        returns = data['Daily_Return'][-1:]
+        result.append(returns)
+        
+    print(columns)
+    print(result)
+    #dump_mutual_fund_data(columns, data, mutual_fund_output_file)
+    
 
 #analyze_stoks()
 analyze_mutual_funds()
