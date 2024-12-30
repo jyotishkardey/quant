@@ -1,8 +1,42 @@
+#Stocks
+dump_stock_to_file = True
 stocks_output_file = "/home/jyotishkardey/quant/stoks_analysis.csv"
 input_data='/home/jyotishkardey/quant/ind_nifty500list.csv'
 enable_whatsapp_Notification = False
 
+#Check uptrend
+chek_uptrend = True
+
+#RSI
+enable_rsi = True
+rsi_lower_limit = 50
+rsi_upper_limit = 80
+
+#MACD
+enable_macd = True
+
+#ADX
+enable_adx = True
+adx=12
+
+#obv
+enable_obv = True
+
+#moving average
+enable_moving_average = True
+
+#Enable Beta
+check_beta = True
+
+#FACTORS
+MOMENTUM_FACTOR = True
+VOLATILITY_FACTOR = False
+
+ANALYZE_STOCKS=True
+
 #Mutual Funds
+ANALYZE_MUTUAL_FUNDS = True
+dump_mutual_funds_to_file=True
 mutual_fund_output_file = "/home/jyotishkardey/quant/fund_analysis.csv"
 fund_names = ['Motilal Oswal Flexicap']
 mutual_fund_ticker_symbols = ['0P00012ZRM.BO']

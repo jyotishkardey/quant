@@ -10,23 +10,33 @@ from settings  import *
 
 # Function to check if the stock is in uptrend for the last week, 15 days and 1 month
 def is_uptrend(data):
+    if chek_uptrend == False:
+        return
     return len(data['Close']) > 50 and data['Close'].iloc[-1] > data['Close'].iloc[-5]  and data['Close'].iloc[-5] > data['Close'].iloc[-15] and data['Close'].iloc[-15] > data['Close'].iloc[-25]
 
 # Function to check RSI
 def check_rsi(data):
+    if enable_rsi == False:
+        return
     rsi = talib.RSI(data['Close'], timeperiod=14)
-    return 50 < rsi.iloc[-1] < 80
+    return rsi_lower_limit < rsi.iloc[-1] < rsi_upper_limit
 
 # Function to check MACD buy signal
 def check_macd(data):
+    if enable_macd == False:
+        return
     macd, macdsignal, macdhist = talib.MACD(data['Close'], fastperiod=12, slowperiod=26, signalperiod=9)
     return macd.iloc[-1] > macdsignal.iloc[-1]
 
 def check_adx(data):
+    if enable_adx == False:
+        return
     data['ADX'] = talib.ADX(data['High'], data['Low'], data['Close'], timeperiod=14)
-    return data['ADX'].iloc[-1] > 12
+    return data['ADX'].iloc[-1] > adx
 
 def is_obv_increasing(data):
+    if enable_obv == False:
+        return
     # Calculate OBV
     data['OBV'] = talib.OBV(data['Close'], data['Volume'])
 
@@ -41,6 +51,8 @@ def is_obv_increasing(data):
     return data['OBV'].iloc[-1] > data['OBV'].iloc[-15]
 
 def compare_moving_average(data):
+    if enable_moving_average == False:
+        return
     # Calculate the 50-day and 200-day moving averages
     data['50_MA'] = data['Close'].rolling(window=50).mean()
     data['200_MA'] = data['Close'].rolling(window=200).mean()
@@ -51,19 +63,27 @@ def compare_moving_average(data):
         return False
 
 def check_beta(ticker):
+    if check_beta == False:
+        return
     key_to_check = 'beta' 
     if key_to_check not in ticker.info:
         return False
     return ticker.info['beta'] < 1
 
 def factor_momentum(data):
+    if MOMENTUM_FACTOR == False:
+        return
     return is_uptrend(data) and check_rsi(data) and check_macd(data) and is_obv_increasing(data) and compare_moving_average(data) and check_adx(data)
 
 def factor_volatility(ticker):
+    if VOLATILITY_FACTOR == False:
+        return True
     return check_beta(ticker)
 
 # Filter stocks based on criteria
 def analyze_stoks():
+    if ANALYZE_STOCKS == False:
+        return
     messageBody = ""
     output = ""
     i = 0
@@ -83,7 +103,7 @@ def analyze_stoks():
         ticker =  yf.Ticker(stock)
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
-        if factor_momentum(data): #and factor_volatility(ticker):
+        if factor_momentum(data) and factor_volatility(ticker):
             filtered_stocks.append(company_names_column[i-1])
             filtered_sector.append(industry_column[i-1])
 
@@ -97,9 +117,11 @@ def analyze_stoks():
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
             messageBody = ""
-    update_frequencies(filtered_stocks, filtered_sector, stocks_output_file)
+    update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_stock_to_file)
 
 def analyze_mutual_funds():
+    if ANALYZE_MUTUAL_FUNDS == False:
+        return
     columns = ['Date']
     result    = []
     rows = []
@@ -137,7 +159,7 @@ def analyze_mutual_funds():
     print(result)
     rows.append(result)
     result =[]
-    dump_mutual_fund_data(columns, rows, mutual_fund_output_file)
+    dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file)
     
 
 analyze_stoks()

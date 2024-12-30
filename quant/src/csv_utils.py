@@ -27,7 +27,9 @@ def read_csv(file, column, suffix):
     
     return ret
 
-def update_frequencies(stocks, sectors, output_file):
+def update_frequencies(stocks, sectors, output_file, dump_stock_to_file):
+    if dump_stock_to_file == False:
+        return
     data_dict = {}
     # Check if the file does not exist
     if not os.path.exists(output_file):
@@ -66,6 +68,8 @@ def generate_New_csv(in_stocks, sectors, output_file):
     df = pd.DataFrame({'Stocks': stocks_dictionary.keys(), 'Sector': sectors, 'Frequency' :stocks_dictionary.values()})
     df.to_csv(output_file, index=False, header=True)
 
-def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file):
+def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_mutual_funds_to_file):
+    if dump_mutual_funds_to_file == False:
+        return
     df = pd.DataFrame(data_list, columns=column_list)
     df.to_csv(mutual_fund_output_file, index=False, header=True)
