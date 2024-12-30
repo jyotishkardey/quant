@@ -63,7 +63,7 @@ def factor_volatility(ticker):
     return check_beta(ticker)
 
 # Filter stocks based on criteria
-def main():
+def analyze_stoks():
     messageBody = ""
     output = ""
     i = 0
@@ -99,4 +99,4 @@ def main():
             messageBody = ""
     update_frequencies(filtered_stocks, filtered_sector, output_file)
 
-main()
+analyze_stoks()

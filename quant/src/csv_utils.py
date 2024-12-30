@@ -27,11 +27,11 @@ def read_csv(file, column, suffix):
     
     return ret
 
-def update_frequencies(stocks,output_file):
+def update_frequencies(stocks, sectors, output_file):
     data_dict = {}
     # Check if the file does not exist
     if not os.path.exists(output_file):
-        generate_New_csv(stocks,output_file)
+        generate_New_csv(stocks, sectors, output_file)
     else:
         stock_column = read_csv_column(output_file,'Stocks')
         frequency_column = read_csv_column(output_file,'Frequency')
@@ -51,18 +51,19 @@ def update_frequencies(stocks,output_file):
             if i != 'Date':
                 stock_dict[i] = int(stock_dict[i]) +int(1)
         
-        df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Frequency' :stock_dict.values()})
+        df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Sector': sectors, 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
-def generate_New_csv(in_stocks,output_file):
+def generate_New_csv(in_stocks, sectors, output_file):
     stocks = in_stocks.copy()
     stocks_dictionary = {}
     
     for stock in stocks:
         stocks_dictionary[stock] = 1
     stocks_dictionary['Date'] = get_current_date()
+    sectors.append('NULL') # To make lists of same length
     # Convert the dictionary to a DataFrame
-    df = pd.DataFrame(list(stocks_dictionary.items()), columns=['Stocks', 'Frequency'])
+    df = pd.DataFrame({'Stocks': stocks_dictionary.keys(), 'Sector': sectors, 'Frequency' :stocks_dictionary.values()})
     df.to_csv(output_file, index=False, header=True)
 
 
