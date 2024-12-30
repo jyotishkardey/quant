@@ -129,12 +129,12 @@ def analyze_mutual_funds():
             date = datetime_str.split()
             result.append(date[1])
 
-        returns = data['Daily_Return'][-1:]
-        result.append(returns)
-        
+        return_val = data['Daily_Return'][-1:]
+        result.append(return_val.values[0])
+
     print(columns)
     print(result)
-    #dump_mutual_fund_data(columns, data, mutual_fund_output_file)
+    #dump_mutual_fund_data(columns, result, mutual_fund_output_file)
     
 
 #analyze_stoks()
