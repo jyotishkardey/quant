@@ -69,8 +69,9 @@ def main():
     i = 0
     nifty_500_stocks = read_csv(input_data,'Symbol','.NS')
     company_names_column = read_csv_column(input_data,'Company Name')
-    indutry_column = read_csv_column(input_data,'Industry')
+    industry_column = read_csv_column(input_data,'Industry')
     filtered_stocks = []
+    filtered_sector = []
 
     #Get 1 year time frame
     end_date = datetime.now()
@@ -83,18 +84,19 @@ def main():
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
         if factor_momentum(data): #and factor_volatility(ticker):
-            filtered_stocks.append(company_names_column[i])
+            filtered_stocks.append(company_names_column[i-1])
+            filtered_sector.append(industry_column[i-1])
 
     print("==============RESULTS==========")
     i = 0
     for stock in filtered_stocks:
         i += 1
-        print (str(i) + ".  " + company_names_column[i-1])
-        messageBody += str(i) + "  " + str(company_names_column[i-1]) + "\n"
+        print (str(i) + ".  [" + company_names_column[i-1] + "]  " + filtered_sector[i-1])
+        messageBody += str(i) + "  [" + str(company_names_column[i-1]) + "]  " + filtered_sector[i-1] + "\n"
         #Send WhatsApp alert
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
             messageBody = ""
-    update_frequencies(filtered_stocks,output_file)
+    update_frequencies(filtered_stocks, filtered_sector, output_file)
 
 main()
