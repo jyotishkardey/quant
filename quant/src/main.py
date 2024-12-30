@@ -99,4 +99,36 @@ def analyze_stoks():
             messageBody = ""
     update_frequencies(filtered_stocks, filtered_sector, output_file)
 
-analyze_stoks()
+def analyze_mutual_funds():
+
+
+    # Define the ticker symbol for the mutual fund
+    ticker_symbol = "0P0001BA79.BO"
+    
+    #Get 1 year time frame
+    end_date = datetime.now()
+    start_date = end_date - pd.DateOffset(years=1)
+    ticker =  yf.Ticker(ticker_symbol)
+    #Get 1 year data
+    data = ticker.history(interval='1d', start=start_date, end=end_date)
+
+    # Calculate percetage daily returns and round it to 2 decimal places
+    data['Daily_Return'] = round(data['Close'].pct_change() * 100, 2)
+    
+    # the Date column might not be explicitly present in the DataFrame. 
+    # Instead, the Date is likely part of the DataFrame index
+    # Reset index to access Date column
+    data.reset_index(inplace=True)
+
+    # Display the daily returns
+    datetime_str = str(data['Date'][-1:])
+    tokens = datetime_str.split()
+
+
+    # Print the formatted date
+    print(tokens[1])
+
+    print(data['Daily_Return'][-1:])
+
+#analyze_stoks()
+analyze_mutual_funds()
