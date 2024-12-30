@@ -67,5 +67,5 @@ def generate_New_csv(in_stocks, sectors, output_file):
     df.to_csv(output_file, index=False, header=True)
 
 def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file):
-    df = pd.DataFrame(data=data_list, columns=column_list)
+    df = pd.DataFrame(data_list, columns=column_list)
     df.to_csv(mutual_fund_output_file, index=False, header=True)
