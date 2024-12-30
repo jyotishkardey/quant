@@ -68,6 +68,8 @@ def main():
     output = ""
     i = 0
     nifty_500_stocks = read_csv(input_data,'Symbol','.NS')
+    company_names_column = read_csv_column(input_data,'Company Name')
+    indutry_column = read_csv_column(input_data,'Industry')
     filtered_stocks = []
 
     #Get 1 year time frame
@@ -76,19 +78,19 @@ def main():
 
     for stock in nifty_500_stocks:
         i += 1
-        print("Analysing " + str(i) + "  "+ stock + " ...")
+        print("Analysing " + str(i) + "  "+ company_names_column[i-1] + " ...")
         ticker =  yf.Ticker(stock)
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
         if factor_momentum(data): #and factor_volatility(ticker):
-            filtered_stocks.append(stock)
+            filtered_stocks.append(company_names_column[i])
 
     print("==============RESULTS==========")
     i = 0
     for stock in filtered_stocks:
         i += 1
-        print (str(i) + ".  " + stock)
-        messageBody += str(i) + "  " + str(stock) + "\n"
+        print (str(i) + ".  " + company_names_column[i-1])
+        messageBody += str(i) + "  " + str(company_names_column[i-1]) + "\n"
         #Send WhatsApp alert
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
