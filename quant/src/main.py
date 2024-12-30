@@ -6,6 +6,7 @@ from datetime import datetime
 #Utility APIS
 from csv_utils import *
 from whatsApp  import *
+from settings  import *
 
 # Function to check if the stock is in uptrend for the last week, 15 days and 1 month
 def is_uptrend(data):
@@ -66,7 +67,7 @@ def main():
     messageBody = ""
     output = ""
     i = 0
-    nifty_500_stocks = read_csv('../ind_nifty500list.csv','Symbol','.NS')
+    nifty_500_stocks = read_csv(input_data,'Symbol','.NS')
     filtered_stocks = []
 
     #Get 1 year time frame
@@ -90,8 +91,8 @@ def main():
         messageBody += str(i) + "  " + str(stock) + "\n"
         #Send WhatsApp alert
         if(len(messageBody) > 1000):
-            sendWhatsAppNotification(messageBody)
+            sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
             messageBody = ""
-    update_frequencies(filtered_stocks)
+    update_frequencies(filtered_stocks,output_file)
 
 main()

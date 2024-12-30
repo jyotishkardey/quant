@@ -2,8 +2,6 @@ import pandas as pd
 import os
 from datetime import date
 
-output_file = "../output.csv"
-
 import pandas as pd
 
 def read_csv_column(file_path, column_name):
@@ -29,11 +27,11 @@ def read_csv(file, column, suffix):
     
     return ret
 
-def update_frequencies(stocks):
+def update_frequencies(stocks,output_file):
     data_dict = {}
     # Check if the file does not exist
     if not os.path.exists(output_file):
-        generate_New_csv(stocks)
+        generate_New_csv(stocks,output_file)
     else:
         stock_column = read_csv_column(output_file,'Stocks')
         frequency_column = read_csv_column(output_file,'Frequency')
@@ -56,7 +54,7 @@ def update_frequencies(stocks):
         df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
-def generate_New_csv(in_stocks):
+def generate_New_csv(in_stocks,output_file):
     stocks = in_stocks.copy()
     stocks_dictionary = {}
     

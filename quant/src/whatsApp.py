@@ -9,7 +9,9 @@ auth_token = os.environ["TWILIO_AUTH_TOKEN"]
 client = Client(account_sid, auth_token)
 
 
-def sendWhatsAppNotification(messageBody):
+def sendWhatsAppNotification(messageBody,enable_whatsapp_Notification):
+    if enable_whatsapp_Notification == False:
+        return
     message = client.messages.create(
     body=messageBody,
     from_="whatsapp:+14155238886",
