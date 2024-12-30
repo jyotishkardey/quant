@@ -111,8 +111,8 @@ def analyze_stoks():
     i = 0
     for stock in filtered_stocks:
         i += 1
-        print (str(i) + ".  [" + company_names_column[i-1] + "]  " + filtered_sector[i-1])
-        messageBody += str(i) + "  [" + str(company_names_column[i-1]) + "]  " + filtered_sector[i-1] + "\n"
+        print (str(i) + ".  [" + stock + "]  " + filtered_sector[i-1])
+        messageBody += str(i) + "  [" + stock + "]  " + filtered_sector[i-1] + "\n"
         #Send WhatsApp alert
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
