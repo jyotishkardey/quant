@@ -122,10 +122,9 @@ def analyze_stoks():
 def analyze_mutual_funds():
     if ANALYZE_MUTUAL_FUNDS == False:
         return
-    columns = ['Date']
     result    = []
     rows = []
-    columns.append(fund_names)
+    columns = ['Date'] + fund_names
     #Get 1 year time frame
     end_date = datetime.now()
     start_date = end_date - pd.DateOffset(years=1)
@@ -158,8 +157,7 @@ def analyze_mutual_funds():
     print(columns)
     print(result)
     rows.append(result)
-    result =[]
-    dump_mutual_fund_data(columns, result, mutual_fund_output_file, dump_mutual_funds_to_file)
+    dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file)
     
 
 analyze_stoks()
