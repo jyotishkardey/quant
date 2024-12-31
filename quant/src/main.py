@@ -133,7 +133,8 @@ def analyze_mutual_funds():
     if ANALYZE_MUTUAL_FUNDS == False:
         return
     result    = []
-    rows = []
+    displayed_funds = []
+    rows      = []
     columns = ['Date'] + fund_names
     #Get 1 year time frame
     end_date = datetime.now()
@@ -164,10 +165,9 @@ def analyze_mutual_funds():
         return_val = data['Daily_Return'][-1:]
         result.append(return_val.values[0])
 
-
-    rows.append(result)
     print("============================Mutual Fund Results========================")
-    df = pd.DataFrame(rows, columns=columns)
+    displayed_funds.append(result)
+    df = pd.DataFrame(displayed_funds, columns=columns)
     print(df)
     
     #Find out top performing Funds
@@ -181,8 +181,18 @@ def analyze_mutual_funds():
         index = result.index(secured_return)
         out_str = str(i) + ".   " + fund_names[index-1 ] + "    Return=  " + str(secured_return)
         print(out_str)
+
+        #Create Ranks fields
+        columns.append("Rank_" + str(i))
+        result.append(fund_names[index-1 ])
+
+        #WhatsApp Notification
         messageBody += out_str
+
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
+
+
+    rows.append(result)
     dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file)
     
 
