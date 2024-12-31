@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import talib
 from datetime import datetime
+import heapq
 
 #Utility APIS
 from csv_utils import *
@@ -118,10 +119,15 @@ def analyze_stoks():
             messageBody = ""
     df = pd.DataFrame({'Stocks': filtered_stocks, 'Sector': filtered_sector})
     print(df)
-    print(filtered_stocks)
-    print(filtered_sector)
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
     update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_stock_to_file)
+
+
+#########MUTUAL FUND APIs########
+def get_n_largest_numbers(n,numbers):
+    largest_numbers = heapq.nlargest(n, numbers)
+    return largest_numbers
+
 
 def analyze_mutual_funds():
     if ANALYZE_MUTUAL_FUNDS == False:
@@ -158,10 +164,25 @@ def analyze_mutual_funds():
         return_val = data['Daily_Return'][-1:]
         result.append(return_val.values[0])
 
+
     rows.append(result)
     print("============================Mutual Fund Results========================")
     df = pd.DataFrame(rows, columns=columns)
     print(df)
+    
+    #Find out top performing Funds
+    top_performer_result = get_n_largest_numbers(top_funds_ctr, result[1:])
+    out_str = "=========================Printing Top Performers=========="
+    print(out_str)
+    i = 0
+    messageBody = ""
+    for secured_return in top_performer_result:
+        i += 1
+        index = result.index(secured_return)
+        out_str = str(i) + ".   " + fund_names[index-1 ] + "    Return=  " + str(secured_return)
+        print(out_str)
+        messageBody += out_str
+    sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
     dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file)
     
 
