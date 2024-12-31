@@ -159,7 +159,7 @@ def analyze_mutual_funds():
     print(result)
     rows.append(result)
     result =[]
-    dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file)
+    dump_mutual_fund_data(columns, result, mutual_fund_output_file, dump_mutual_funds_to_file)
     
 
 analyze_stoks()
