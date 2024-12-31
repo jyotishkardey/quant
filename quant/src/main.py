@@ -107,16 +107,20 @@ def analyze_stoks():
             filtered_stocks.append(company_names_column[i-1])
             filtered_sector.append(industry_column[i-1])
 
-    print("==============RESULTS==========")
+    print("============================STOCK RESULTS========================")
     i = 0
     for stock in filtered_stocks:
         i += 1
-        print (str(i) + ".  [" + stock + "]  " + filtered_sector[i-1])
         messageBody += str(i) + "  [" + stock + "]  " + filtered_sector[i-1] + "\n"
         #Send WhatsApp alert
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
             messageBody = ""
+    df = pd.DataFrame({'Stocks': filtered_stocks, 'Sector': filtered_sector})
+    print(df)
+    print(filtered_stocks)
+    print(filtered_sector)
+    sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
     update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_stock_to_file)
 
 def analyze_mutual_funds():
@@ -154,9 +158,10 @@ def analyze_mutual_funds():
         return_val = data['Daily_Return'][-1:]
         result.append(return_val.values[0])
 
-    print(columns)
-    print(result)
     rows.append(result)
+    print("============================Mutual Fund Results========================")
+    df = pd.DataFrame(rows, columns=columns)
+    print(df)
     dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file)
     
 

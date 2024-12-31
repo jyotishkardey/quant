@@ -29,10 +29,10 @@ enable_moving_average = True
 check_beta = True
 
 #FACTORS
-MOMENTUM_FACTOR = False
+MOMENTUM_FACTOR = True
 VOLATILITY_FACTOR = False
 
-ANALYZE_STOCKS=False
+ANALYZE_STOCKS=True
 
 #Mutual Funds
 ANALYZE_MUTUAL_FUNDS = True
