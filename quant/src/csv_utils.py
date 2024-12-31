@@ -43,16 +43,16 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file):
         for stock in stock_column:
             stock_dict[stock] = frequency_column[i]
             i+= 1
-
+        
         if str(stock_dict['Date']) == str(get_current_date()):
             return;
         else:
             data_dict['Date'] = get_current_date()
+            sectors.append('NULL')
         
         for i in stocks:
             if i != 'Date':
                 stock_dict[i] = int(stock_dict[i]) +int(1)
-        
         df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Sector': sectors, 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
