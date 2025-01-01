@@ -119,3 +119,25 @@ def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_
 
     df = pd.DataFrame(data_list, columns=column_list)
     df.to_csv(mutual_fund_output_file, index=False, header=header_flag, mode=mode_flag)
+
+
+def frequncy_distribution_top_funds(enable_frequncy_distribution_top_funds, mutual_fund_output_file ,top_funds_ctr):
+
+    if enable_frequncy_distribution_top_funds == False:
+        return
+
+    if not os.path.exists(mutual_fund_output_file):
+        print("Can not calculate Frequency distribuiton of top funds as value does not exists")
+
+    for i in range(top_funds_ctr):
+        print(i)
+        column_name = "Rank_" + str(i+1)
+
+        # Load the CSV file into a DataFrame
+        df = pd.read_csv(mutual_fund_output_file)
+
+        # Assuming the column you want to analyze is named 'column_name'
+        frequency_distribution = df[column_name].value_counts()
+
+        print("\n\n")
+        print(frequency_distribution)

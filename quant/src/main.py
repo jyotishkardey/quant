@@ -195,6 +195,10 @@ def analyze_mutual_funds():
     rows.append(result)
     dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file, date[1])
     
-
+#STOCKS
 analyze_stoks()
+
+#MUTUAL FUNDS
 analyze_mutual_funds()
+#csv analysis
+frequncy_distribution_top_funds(enable_frequncy_distribution_top_funds, mutual_fund_output_file, top_funds_ctr)
