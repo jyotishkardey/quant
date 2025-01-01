@@ -103,6 +103,21 @@ def generate_New_csv(in_stocks, sectors, output_file):
 
 def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_mutual_funds_to_file):
     if dump_mutual_funds_to_file == False:
+        return 
+
+    header_flag = False
+    mode_flag = 'a' #Append
+    today = ""
+
+    # Check if the file does not exist, add header to the csv file
+    if not os.path.exists(mutual_fund_output_file):
+        header_flag = True
+        mode_flag = 'w'
+
+    today = get_current_date()
+
+    if today in  data_list:
         return
+
     df = pd.DataFrame(data_list, columns=column_list)
-    df.to_csv(mutual_fund_output_file, index=False, header=True)
+    df.to_csv(mutual_fund_output_file, index=False, header=header_flag, mode=mode_flag)
