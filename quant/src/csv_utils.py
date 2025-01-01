@@ -30,30 +30,63 @@ def read_csv(file, column, suffix):
 def update_frequencies(stocks, sectors, output_file, dump_stock_to_file):
     if dump_stock_to_file == False:
         return
-    data_dict = {}
+
     # Check if the file does not exist
     if not os.path.exists(output_file):
         generate_New_csv(stocks, sectors, output_file)
     else:
         stock_column = read_csv_column(output_file,'Stocks')
         frequency_column = read_csv_column(output_file,'Frequency')
+        sector_column = read_csv_column(output_file,'Sector')
+
+        new_entrant_stocks = []
+        new_entrant_sector = []
+        current_date = ""
 
         stock_dict = {}
         i = 0
+
+        #Create a dictionary containing all stocks and frequencies form the csv
         for stock in stock_column:
             stock_dict[stock] = frequency_column[i]
             i+= 1
         
+        #Exit if there it is upto date
         if str(stock_dict['Date']) == str(get_current_date()):
             return;
         else:
-            data_dict['Date'] = get_current_date()
-            sectors.append('NULL')
+            #Delete the Date field. Will add after stocks are added to maintain
+            #correct postion
+            del stock_dict['Date']
+            #Remove the corresponding field from sector column
+            sector_column.pop()
+            
         
-        for i in stocks:
-            if i != 'Date':
-                stock_dict[i] = int(stock_dict[i]) +int(1)
-        df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Sector': sectors, 'Frequency' :stock_dict.values()})
+        i = 0
+        #Iterate through the calculated stocks
+        for stock in stocks:
+            i += 1
+            # If the stock exists in csv increment frequency counter
+            if stock in stock_column :
+                stock_dict[stock] = int(stock_dict[stock]) + int(1)
+            #If the stock is a new entry add to new entr
+            else:
+                new_entrant_stocks.append(stock)
+                new_entrant_sector.append(sectors[i-1])
+
+        #Dump the new stocks which were not in csv to the dictionary
+        for stock in new_entrant_stocks:
+            stock_dict[stock] = 1
+        
+        #Insert the new entrant sectors at the second last postion of sector column  just
+        # before the Date field
+        sector_column = sector_column + new_entrant_sector
+        sector_column.append('NULL') # For Date field
+
+        #Add the date since it was deleted from dictionary and population of stocks is completed
+        stock_dict['Date'] = get_current_date()
+
+        df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Sector': sector_column, 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
 def generate_New_csv(in_stocks, sectors, output_file):
