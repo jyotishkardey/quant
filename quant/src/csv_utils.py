@@ -108,13 +108,17 @@ def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_
     header_flag = False
     mode_flag = 'a' #Append
  
-
+    
     # Check if the file does not exist, add header to the csv file
     if not os.path.exists(mutual_fund_output_file):
         header_flag = True
         mode_flag = 'w'
 
-    if date in  data_list[0] and os.path.exists(mutual_fund_output_file):
+    #File exists
+
+    #Check if latest data is present. If yes skip
+    existing_date_list = read_csv_column(mutual_fund_output_file, 'Date')
+    if date in  existing_date_list and os.path.exists(mutual_fund_output_file):
         return
 
     df = pd.DataFrame(data_list, columns=column_list)
