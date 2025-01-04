@@ -50,16 +50,16 @@ indian_sectoral_indices = [
     '^NSEBANK',  # NIFTY Bank
     'BSE-MIDCAP.BO',  # BSE Midcap
     'BSE-SMLCAP.BO',  # BSE Smallcap
-    'NIFTY_TOTAL_MKT.NS',  # NIFTY Total Market
+#    'NIFTY_TOTAL_MKT.NS',  # NIFTY Total Market
     '^CNXAUTO',  # NIFTY Auto
     '^CNXENERGY',  # NIFTY Energy
     '^CNXIT',  # NIFTY IT
-    '^CNXPHARMA',  # NIFTY Pharma
-    'NIFTY_HEALTHCARE.NS',  # NIFTY Healthcare
+ #   '^CNXPHARMA',  # NIFTY Pharma
+ #   'NIFTY_HEALTHCARE.NS',  # NIFTY Healthcare
     '^CNXSERVICE',  # NIFTY Services
     '^CNXCONSUM',  # NIFTY Consumption
     '^CNXREALTY',  # NIFTY Realty
-    'NIFTY_OIL_AND_GAS.NS',  # NIFTY Oil & Gas
+ #   'NIFTY_OIL_AND_GAS.NS',  # NIFTY Oil & Gas
     '^CNXFMCG',  # NIFTY FMCG
     '^CNXINFRA',  # NIFTY Infrastructure
 ]
