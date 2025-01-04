@@ -5,7 +5,7 @@ input_data='/home/jyotishkardey/quant/ind_nifty500list.csv'
 
 #WhatsApp Settings
 
-enable_whatsapp_Notification = True
+enable_whatsapp_Notification = False
 
 #Check uptrend
 chek_uptrend = True
@@ -32,7 +32,7 @@ enable_moving_average = True
 check_beta = True
 
 #FACTORS
-MOMENTUM_FACTOR = True
+MOMENTUM_FACTOR = False
 VOLATILITY_FACTOR = False
 
 ANALYZE_STOCKS=True
@@ -42,6 +42,11 @@ ANALYZE_MUTUAL_FUNDS = True
 dump_mutual_funds_to_file=True
 top_funds_ctr = 3
 enable_frequncy_distribution_top_funds = True
+
+#Sector Analysis
+sectors = ['AAPL', 'MSFT', 'GOOGL']  # Replace with your desired list of ticker symbols
+periods = [5, 15, 30, 90]  # 5 days, 15 days, 1 month (30 days), 3 months (90 days)
+filename = '../sector_returns.csv'
 
 mutual_fund_output_file = "/home/jyotishkardey/quant/fund_analysis.csv"
 fund_names = ['Motilal Oswal Flexicap', 'Invesco Focused Fund', 'Quant Flexicap', 'HDFC Flexicap', 'Axis Flexicap','DSP Flexicap','DSP Focused Fund','Invesco Flexicap','PGIM Flexicap','Motilal Midcap','SBI Flexicap','PPFAS Flexicap']

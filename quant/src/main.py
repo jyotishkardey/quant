@@ -194,7 +194,40 @@ def analyze_mutual_funds():
 
     rows.append(result)
     dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file, date[1])
+
+#Sectoral Analysis Function Implementations
+
+def _calculate_return(ticker, periods):
+    # Fetch historical data
+    stock = yf.Ticker(ticker)
+    data = stock.history(period='6mo')  # Fetching 6 months of data to ensure we have enough data for calculations
     
+    # Calculate returns for different periods
+    returns = {}
+    for period in periods:
+        data[f'{period}d_return'] = data['Close'].pct_change(periods=period)
+        latest_return = data[f'{period}d_return'].iloc[-1]
+        returns[f'last_{period}_days'] = latest_return
+        
+    return returns
+
+
+def calculate_sectoral_return(sectors, periods, filename):
+    # Create a DataFrame to store returns
+    returns_df = pd.DataFrame(index=sectors, columns=[f'last_{period}_days' for period in periods])
+
+
+    for ticker in sectors:
+        returns = _calculate_return(ticker, periods)
+        for period, ret in returns.items():
+            returns_df.loc[ticker, period] = ret * 100  # Convert to percentage
+    
+    
+    print("\n\n ==============================SECTORAL ANALYIS============")
+    print(returns_df)
+    # Save DataFrame to CSV
+    returns_df.to_csv(filename)
+
 #STOCKS
 analyze_stoks()
 
@@ -202,3 +235,7 @@ analyze_stoks()
 analyze_mutual_funds()
 #csv analysis
 frequncy_distribution_top_funds(enable_frequncy_distribution_top_funds, mutual_fund_output_file, top_funds_ctr)
+
+#Sectoral Analysis
+calculate_sectoral_return(sectors, periods, filename)
+
