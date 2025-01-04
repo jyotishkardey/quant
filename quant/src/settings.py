@@ -32,7 +32,7 @@ enable_moving_average = True
 check_beta = True
 
 #FACTORS
-MOMENTUM_FACTOR = False
+MOMENTUM_FACTOR = True
 VOLATILITY_FACTOR = False
 
 ANALYZE_STOCKS=True
@@ -44,7 +44,26 @@ top_funds_ctr = 3
 enable_frequncy_distribution_top_funds = True
 
 #Sector Analysis
-sectors = ['AAPL', 'MSFT', 'GOOGL']  # Replace with your desired list of ticker symbols
+ANALYZE_SECTORS = True
+indian_sectoral_indices = [
+    '^NSEI',  # NIFTY 50
+    '^NSEBANK',  # NIFTY Bank
+    'BSE-MIDCAP.BO',  # BSE Midcap
+    'BSE-SMLCAP.BO',  # BSE Smallcap
+    'NIFTY_TOTAL_MKT.NS',  # NIFTY Total Market
+    '^CNXAUTO',  # NIFTY Auto
+    '^CNXENERGY',  # NIFTY Energy
+    '^CNXIT',  # NIFTY IT
+    '^CNXPHARMA',  # NIFTY Pharma
+    'NIFTY_HEALTHCARE.NS',  # NIFTY Healthcare
+    '^CNXSERVICE',  # NIFTY Services
+    '^CNXCONSUM',  # NIFTY Consumption
+    '^CNXREALTY',  # NIFTY Realty
+    'NIFTY_OIL_AND_GAS.NS',  # NIFTY Oil & Gas
+    '^CNXFMCG',  # NIFTY FMCG
+    '^CNXINFRA',  # NIFTY Infrastructure
+]
+
 periods = [5, 15, 30, 90]  # 5 days, 15 days, 1 month (30 days), 3 months (90 days)
 filename = '../sector_returns.csv'
 

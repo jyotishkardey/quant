@@ -213,6 +213,9 @@ def _calculate_return(ticker, periods):
 
 
 def calculate_sectoral_return(sectors, periods, filename):
+    if ANALYZE_SECTORS == False:
+        returnls
+        
     # Create a DataFrame to store returns
     returns_df = pd.DataFrame(index=sectors, columns=[f'last_{period}_days' for period in periods])
 
@@ -237,5 +240,5 @@ analyze_mutual_funds()
 frequncy_distribution_top_funds(enable_frequncy_distribution_top_funds, mutual_fund_output_file, top_funds_ctr)
 
 #Sectoral Analysis
-calculate_sectoral_return(sectors, periods, filename)
+calculate_sectoral_return(indian_sectoral_indices, periods, filename)
 
