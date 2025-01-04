@@ -10,7 +10,7 @@ https://www.nseindia.com/products-services/indices-nifty500-index
 RUNNING The Programme
 ./run.sh
 
-TROUBLE SHOOTING
+TROUBLE SHOOTING STOCK MUTUAL FUND ANALYZERS
 1. To update nifty 500 universe update the file ind_nifty500list.csv from NSE website
 2. Ta-lib so error loading in GCP. Since the compute node is reset after 20 min of unuse and the storage is not persistent,
 run install-ta-Lib.sh 
@@ -22,5 +22,9 @@ export TWILIO_AUTH_TOKEN=
 crontab -e
 sudo service cron start
 sudo service cron status
+
+TROUBLE SHOOTING Trending stock analyzer
+1.pip install feedparser
+
 
 Export them manually
