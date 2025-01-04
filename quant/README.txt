@@ -18,5 +18,9 @@ run install-ta-Lib.sh
 The export of following variables does not work correctly from script
 export TWILIO_ACCOUNT_SID=
 export TWILIO_AUTH_TOKEN=
+4. Cron Commands
+crontab -e
+sudo service cron start
+sudo service cron status
 
 Export them manually
