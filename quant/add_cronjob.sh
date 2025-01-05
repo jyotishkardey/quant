@@ -1,7 +1,10 @@
 #!/bin/bash
 
-sudo service cron start
 sudo service cron status
+cron_running=`echo $?`	
+
+if [ $cron_running -ne 0 ]; then
+sudo service cron start
 # Define your cron job
 CRON_JOB="0 4 * * 2-6 /home/jyotishkardey/quant/cron.sh"
 
@@ -10,4 +13,4 @@ CRON_JOB="0 4 * * 2-6 /home/jyotishkardey/quant/cron.sh"
 
 # Print a success message
 echo "Cron job added successfully!"
-
+fi
