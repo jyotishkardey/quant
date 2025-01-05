@@ -93,6 +93,8 @@ def analyze_stoks():
     industry_column = read_csv_column(input_data,'Industry')
     filtered_stocks = []
     filtered_sector = []
+    date_val = ""
+    dump_data_to_file = dump_stock_to_file
 
     #Get 1 year time frame
     end_date = datetime.now()
@@ -100,10 +102,30 @@ def analyze_stoks():
 
     for stock in nifty_500_stocks:
         i += 1
-        print("Analysing " + str(i) + "  "+ company_names_column[i-1] + " ...")
         ticker =  yf.Ticker(stock)
         #Get 1 year data
         data = ticker.history(interval='1d', start=start_date, end=end_date)
+
+        if i == 1:
+            #If the file is upto date return
+            # The Date column might not be explicitly present in the DataFrame. 
+            # Instead, the Date is likely part of the DataFrame index
+            # Reset index to access Date column
+            data.reset_index(inplace=True)
+
+            # Display the daily returns
+            datetime_str = str(data['Date'][-1:])
+            date = datetime_str.split()
+            date_val = date[1]   
+            # Check if the file does not exist
+            if os.path.exists(stocks_output_file):
+                date_column = read_csv_column(stocks_output_file,'Frequency')
+                if date_val in date_column:
+                    print("The stock data is up to date")
+                    dump_data_to_file = False
+        
+        print("Analysing " + str(i) + "  "+ company_names_column[i-1] + " ...")
+
         if factor_momentum(data) and factor_volatility(ticker):
             filtered_stocks.append(company_names_column[i-1])
             filtered_sector.append(industry_column[i-1])
@@ -120,7 +142,7 @@ def analyze_stoks():
     df = pd.DataFrame({'Stocks': filtered_stocks, 'Sector': filtered_sector})
     print(df)
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
-    update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_stock_to_file)
+    update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_data_to_file, date_val)
 
 
 #########MUTUAL FUND APIs########
@@ -145,8 +167,12 @@ def analyze_mutual_funds():
         i += 1
         ticker =  yf.Ticker(ticker_symbol)
 
+        #Hack for NIFTY Total Market as only 1 day & 5 d period works
         #Get 1 year data
-        data = ticker.history(interval='1d', start=start_date, end=end_date)
+        if ticker_symbol == 'NIFTY_TOTAL_MKT.NS':
+            data = ticker.history(interval='1d', period='1d')
+        else:
+            data = ticker.history(interval='1d', start=start_date, end=end_date)
 
         # Calculate percetage daily returns and round it to 2 decimal places
         data['Daily_Return'] = round(data['Close'].pct_change() * 100, 2)
@@ -215,9 +241,13 @@ def _calculate_return(ticker, periods):
 def calculate_sectoral_return(sectors, periods, filename):
     if ANALYZE_SECTORS == False:
         returnls
-        
+    
+    columns_val = []
+    columns_val.append('Sector')
+    for period in periods:
+        columns_val.append(f'last_{period}_days')
     # Create a DataFrame to store returns
-    returns_df = pd.DataFrame(index=sectors, columns=[f'last_{period}_days' for period in periods])
+    returns_df = pd.DataFrame(index=sectors, columns=columns_val)
 
 
     for ticker in sectors:

@@ -27,13 +27,13 @@ def read_csv(file, column, suffix):
     
     return ret
 
-def update_frequencies(stocks, sectors, output_file, dump_stock_to_file):
+def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_val):
     if dump_stock_to_file == False:
         return
 
     # Check if the file does not exist
     if not os.path.exists(output_file):
-        generate_New_csv(stocks, sectors, output_file)
+        generate_New_csv(stocks, sectors, output_file, date_val)
     else:
         stock_column = read_csv_column(output_file,'Stocks')
         frequency_column = read_csv_column(output_file,'Frequency')
@@ -51,15 +51,12 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file):
             stock_dict[stock] = frequency_column[i]
             i+= 1
         
-        #Exit if there it is upto date
-        if str(stock_dict['Date']) == str(get_current_date()):
-            return;
-        else:
-            #Delete the Date field. Will add after stocks are added to maintain
-            #correct postion
-            del stock_dict['Date']
-            #Remove the corresponding field from sector column
-            sector_column.pop()
+
+        #Delete the Date field. Will add after stocks are added to maintain
+        #correct postion
+        del stock_dict['Date']
+        #Remove the corresponding field from sector column
+        sector_column.pop()
             
         
         i = 0
@@ -84,24 +81,25 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file):
         sector_column.append('NULL') # For Date field
 
         #Add the date since it was deleted from dictionary and population of stocks is completed
-        stock_dict['Date'] = get_current_date()
-
+        stock_dict['Date'] = date_val
         df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Sector': sector_column, 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
-def generate_New_csv(in_stocks, sectors, output_file):
+def generate_New_csv(in_stocks, sectors, output_file, date_val):
     stocks = in_stocks.copy()
     stocks_dictionary = {}
     
     for stock in stocks:
         stocks_dictionary[stock] = 1
-    stocks_dictionary['Date'] = get_current_date()
+    stocks_dictionary['Date'] = date_val
     sectors.append('NULL') # To make lists of same length
     # Convert the dictionary to a DataFrame
     df = pd.DataFrame({'Stocks': stocks_dictionary.keys(), 'Sector': sectors, 'Frequency' :stocks_dictionary.values()})
     df.to_csv(output_file, index=False, header=True)
 
 def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_mutual_funds_to_file, date):
+    existing_date_list = []
+
     if dump_mutual_funds_to_file == False:
         return 
 
@@ -117,9 +115,10 @@ def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_
     #File exists
 
     #Check if latest data is present. If yes skip
-    existing_date_list = read_csv_column(mutual_fund_output_file, 'Date')
-    if date in  existing_date_list and os.path.exists(mutual_fund_output_file):
-        return
+    if os.path.exists(mutual_fund_output_file):
+        existing_date_list = read_csv_column(mutual_fund_output_file, 'Date')
+        if date in  existing_date_list:
+            return
 
     df = pd.DataFrame(data_list, columns=column_list)
     df.to_csv(mutual_fund_output_file, index=False, header=header_flag, mode=mode_flag)
@@ -131,7 +130,8 @@ def frequncy_distribution_top_funds(enable_frequncy_distribution_top_funds, mutu
         return
 
     if not os.path.exists(mutual_fund_output_file):
-        print("Can not calculate Frequency distribuiton of top funds as value does not exists")
+        print("Can not calculate Frequency distribuiton of top funds as file does not exist")
+        return
 
     for i in range(top_funds_ctr):
         print(i)

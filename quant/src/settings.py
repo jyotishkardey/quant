@@ -68,5 +68,30 @@ periods = [5, 15, 30, 90]  # 5 days, 15 days, 1 month (30 days), 3 months (90 da
 filename = '../sector_returns.csv'
 
 mutual_fund_output_file = "/home/jyotishkardey/quant/fund_analysis.csv"
-fund_names = ['Motilal Oswal Flexicap', 'Invesco Focused Fund', 'Quant Flexicap', 'HDFC Flexicap', 'Axis Flexicap','DSP Flexicap','DSP Focused Fund','Invesco Flexicap','PGIM Flexicap','Motilal Midcap','SBI Flexicap','PPFAS Flexicap']
-mutual_fund_ticker_symbols = ['0P00012ZRM.BO','0P0001KMZA.BO','0P0000IQJ7.BO','0P00005WLZ.BO','0P0001BURF.BO','0P00005V93.BO','0P0001B9ZE.BO','0P0001OAAY.BO','0P00015I1S.BO','0P00012ALU.BO','0P0000XVL2.BO','0P0000YWL1.BO']
+fund_names = ['Motilal Oswal Flexicap',
+ 'Invesco Focused Fund', 
+ 'Quant Flexicap', 
+ 'HDFC Flexicap', 
+ 'Axis Flexicap', 
+ 'DSP Flexicap',
+ 'DSP Focused Fund',
+ 'Invesco Flexicap',
+ 'PGIM Flexicap',
+ 'Motilal Midcap',
+ 'SBI Flexicap',
+ #'NIFTY Total Market'
+ 'PPFAS Flexicap',]
+
+mutual_fund_ticker_symbols = ['0P00012ZRM.BO',
+'0P0001KMZA.BO',
+'0P0000IQJ7.BO',
+'0P00005WLZ.BO',
+'0P0001BURF.BO',
+'0P00005V93.BO',
+'0P0001B9ZE.BO',
+'0P0001OAAY.BO',
+'0P00015I1S.BO',
+'0P00012ALU.BO',
+'0P0000XVL2.BO',
+#'NIFTY_TOTAL_MKT.NS'
+'0P0000YWL1.BO',]
