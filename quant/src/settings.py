@@ -79,7 +79,7 @@ fund_names = ['Motilal Oswal Flexicap',
  'PGIM Flexicap',
  'Motilal Midcap',
  'SBI Flexicap',
- #'NIFTY Total Market'
+ 'NIFTY Total Market',
  'PPFAS Flexicap',]
 
 mutual_fund_ticker_symbols = ['0P00012ZRM.BO',
@@ -93,5 +93,5 @@ mutual_fund_ticker_symbols = ['0P00012ZRM.BO',
 '0P00015I1S.BO',
 '0P00012ALU.BO',
 '0P0000XVL2.BO',
-#'NIFTY_TOTAL_MKT.NS'
+'NIFTY_TOTAL_MKT.NS',
 '0P0000YWL1.BO',]
