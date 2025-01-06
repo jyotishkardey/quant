@@ -35,13 +35,12 @@ check_beta = True
 MOMENTUM_FACTOR = True
 VOLATILITY_FACTOR = False
 
-ANALYZE_STOCKS=True
+ANALYZE_STOCKS = True
 
 #Mutual Funds
 ANALYZE_MUTUAL_FUNDS = True
-dump_mutual_funds_to_file=True
+dump_mutual_funds_to_file = True
 top_funds_ctr = 3
-enable_frequncy_distribution_top_funds = True
 
 #Sector Analysis
 ANALYZE_SECTORS = True

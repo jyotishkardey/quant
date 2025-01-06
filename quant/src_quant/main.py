@@ -267,8 +267,6 @@ analyze_stoks()
 
 #MUTUAL FUNDS
 analyze_mutual_funds()
-#csv analysis
-frequncy_distribution_top_funds(enable_frequncy_distribution_top_funds, mutual_fund_output_file, top_funds_ctr)
 
 #Sectoral Analysis
 calculate_sectoral_return(indian_sectoral_indices, periods, filename)
