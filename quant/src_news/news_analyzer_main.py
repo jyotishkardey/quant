@@ -4,6 +4,7 @@ from settings import *
 from utils     import *
 
 def main():
+    global enable_file_dump
     # Parse the RSS feed
     feed = feedparser.parse(url)
 
@@ -24,6 +25,9 @@ def main():
                 "published": article_date
             })
 
+    if article_file_exists():
+        enable_file_dump = False
+
     # Print the recent articles
     for article in recent_articles:
         print(f"Title: {article['title']}\nLink: {article['link']}\nPublished: {article['published']}\n")
@@ -32,6 +36,10 @@ def main():
     # Example output when articles are not found
     if not recent_articles:
         print("No recent articles found that are less than 5 days old.")
+
+    if enable_file_dump == False:
+        print("\n\n\n SKIPPING FILE DUMP AS FILE ALREADY EXISTS")
+
 
 
 

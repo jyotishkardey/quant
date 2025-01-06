@@ -1,13 +1,31 @@
 import feedparser
 from datetime import datetime, timedelta
+import os
+
 from settings import *
 
+def article_file_exists():
+    # Get the current date and time
+    current_date = datetime.now().date()
+
+    appended_file_name = file_name + str(current_date)
+
+    if os.path.exists(appended_file_name):
+        print(f"\n\n\nThe file{file_name} exits. Skipping")
+        return True
+    return False
+
+
 def dump_to_file(article):
-    if dump_to_file == False:
+    if enable_file_dump == False:
         return
 
+    # Get the current date and time and populate file name
+    current_date = datetime.now().date()
+    appended_file_name = file_name + str(current_date)
+
     # Write the recent articles to a file
-    with open(file_name, "a", encoding="utf-8") as file:
+    with open(appended_file_name, "a", encoding="utf-8") as file:
         file.write(f"Title: {article['title']}\n")
         file.write(f"Link: {article['link']}\n")
         file.write(f"Published: {article['published']}\n\n")

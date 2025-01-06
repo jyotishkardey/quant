@@ -4,4 +4,4 @@ url = "https://news.google.com/rss/search?q=Indian+stock+market&hl=en-IN&gl=IN&c
 # Define the file name
 file_name = "recent_articles.txt"
 
-dump_to_file = True
+enable_file_dump = True
