@@ -4,6 +4,15 @@ from datetime import date
 
 import pandas as pd
 
+def read_csv_row_number(file_path, row_number):
+    df = pd.read_csv(file_path)
+    if row_number < len(df):
+        row = df.iloc[row_number].tolist()
+        return row
+    else:
+        print(f"Row number {row_number} not found in file {file_path}")
+        return None
+
 def read_csv_column(file_path, column_name):
     df = pd.read_csv(file_path)
     return df[column_name].tolist()
@@ -116,7 +125,7 @@ def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_
 
     #Check if latest data is present. If yes skip
     if os.path.exists(mutual_fund_output_file):
-        existing_date_list = read_csv_column(mutual_fund_output_file, 'Date')
+        existing_date_list = read_csv_row_number(mutual_fund_output_file, 0)
         if date in  existing_date_list:
             return
 

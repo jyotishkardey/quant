@@ -154,10 +154,13 @@ def get_n_largest_numbers(n,numbers):
 def analyze_mutual_funds():
     if ANALYZE_MUTUAL_FUNDS == False:
         return
-    result    = []
+
     displayed_funds = []
-    rows      = []
-    columns = ['Date'] + fund_names
+    rows            = []
+    row             = []
+    columns         = ['Fund Name']
+    return_list  = []
+
     #Get 1 year time frame
     end_date = datetime.now()
     start_date = end_date - pd.DateOffset(years=1)
@@ -186,39 +189,37 @@ def analyze_mutual_funds():
             # Display the daily returns
             datetime_str = str(data['Date'][-1:])
             date = datetime_str.split()
-            result.append(date[1])
+            columns.append(date[1])
 
         return_val = data['Daily_Return'][-1:]
-        result.append(return_val.values[0])
+        row.append(fund_names[i-1])
+        row.append(return_val.values[0])
+        return_list.append(return_val.values[0])
+        rows.append(row)
+        row = []
 
     print("============================Mutual Fund Results========================")
-    displayed_funds.append(result)
-    df = pd.DataFrame(displayed_funds, columns=columns)
+    df = pd.DataFrame(rows, columns=columns)
     print(df)
     
     #Find out top performing Funds
-    top_performer_result = get_n_largest_numbers(top_funds_ctr, result[1:])
+    top_performer_result = get_n_largest_numbers(top_funds_ctr, return_list)
     out_str = "=========================Printing Top Performers=========="
     print(out_str)
     i = 0
     messageBody = ""
     for secured_return in top_performer_result:
         i += 1
-        index = result.index(secured_return)
-        out_str = str(i) + ".   " + fund_names[index-1 ] + "    Return=  " + str(secured_return)
+        index = return_list.index(secured_return)
+        out_str = str(i) + ".   " + fund_names[index] + "    Return=  " + str(secured_return)
         print(out_str)
-
-        #Create Ranks fields
-        columns.append("Rank_" + str(i))
-        result.append(fund_names[index-1 ])
 
         #WhatsApp Notification
         messageBody += out_str
 
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
 
-
-    rows.append(result)
+    
     dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file, date[1])
 
 #Sectoral Analysis Function Implementations
@@ -240,7 +241,7 @@ def _calculate_return(ticker, periods):
 
 def calculate_sectoral_return(sectors, periods, filename):
     if ANALYZE_SECTORS == False:
-        returnls
+        return
     
     columns_val = []
     columns_val.append('Sector')
