@@ -13,6 +13,14 @@ RUNNING The Programme
 2./run.sh or python main.py
 
 =================== TROUBLE SHOOTING STOCK MUTUAL FUND ANALYZERS =================
+Python Libraries used
+1. Yfinance
+2. Ta-Lib
+3. pip install beautifulsoup4
+
+
+
+
 1. To update nifty 500 universe update the file ind_nifty500list.csv from NSE website
 2. Ta-lib so error loading in GCP. Since the compute node is reset after 20 min of unuse and the storage is not persistent,
 run install-ta-Lib.sh 
