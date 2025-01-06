@@ -29,6 +29,10 @@ sudo service cron status
 
 ================= TROUBLE SHOOTING Stock news analyzer  =================
 1.pip install feedparser
+2. pip install beautifulsoup4
+3. pip install lxml
+4. pip install html5lib
+
 ==================================================================================
 
 
