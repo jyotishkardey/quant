@@ -1,8 +1,13 @@
 import feedparser
 from datetime import datetime, timedelta
 import os
+import pandas as pd
 
 from settings import *
+
+def read_csv_column(file_path, column_name):
+    df = pd.read_csv(file_path)
+    return df[column_name].tolist()
 
 def article_file_exists():
     # Get the current date and time

@@ -2,6 +2,32 @@ import feedparser
 from datetime import datetime, timedelta
 from settings import *
 from utils     import *
+import pandas as pd
+
+def generateTrendingStocks():
+    stock_column = read_csv_column(input_data,'Company Name')
+    trending_stocks = {}
+    count = 0
+
+    current_date = datetime.now().date()
+    appended_file_name = file_name + str(current_date)
+    '''
+    if os.path.exists(appended_file_name):
+        print(f"\n\n\nThe file{file_name} exits. Skipping")
+        return True
+    '''
+    i = 0
+    for stock in stock_column:
+        i += 1
+        print(f"Counting word occurences for Stock #{i}.  {stock}")
+        count = count_word_occurrences(appended_file_name, stock)
+
+        if count != 0:
+            trending_stocks[stock] = count
+    print("============================")
+    print(trending_stocks)
+    #trending_stocks_df = pd.DataFrame(trending_stocks)
+    #print(trending_stocks_df)
 
 def main():
     global enable_file_dump
@@ -32,6 +58,8 @@ def main():
     for article in recent_articles:
         print(f"Title: {article['title']}\nLink: {article['link']}\nPublished: {article['published']}\n")
         dump_to_file(article)
+       
+    generateTrendingStocks()
     
     # Example output when articles are not found
     if not recent_articles:
@@ -39,8 +67,6 @@ def main():
 
     if enable_file_dump == False:
         print("\n\n\n SKIPPING FILE DUMP AS FILE ALREADY EXISTS")
-
-
 
 
 main()
