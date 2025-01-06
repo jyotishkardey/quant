@@ -20,14 +20,16 @@ def generateTrendingStocks():
     for stock in stock_column:
         i += 1
         print(f"Counting word occurences for Stock #{i}.  {stock}")
-        count = count_word_occurrences(appended_file_name, stock)
+        first_word = stock.split()[0]
+        count = count_word_occurrences(appended_file_name, first_word)
 
         if count != 0:
             trending_stocks[stock] = count
+
+    trending_stocks_df = pd.DataFrame({'Stock': trending_stocks.keys(), 'Frequncy':trending_stocks.values()})
     print("============================")
-    print(trending_stocks)
-    #trending_stocks_df = pd.DataFrame(trending_stocks)
-    #print(trending_stocks_df)
+    print(trending_stocks_df)
+    trending_stocks_df.to_csv(trending_stocks_output_file, index=False, header=True)
 
 def main():
     global enable_file_dump
