@@ -220,7 +220,7 @@ def analyze_mutual_funds():
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
 
     
-    dump_mutual_fund_data(columns, rows, mutual_fund_output_file, dump_mutual_funds_to_file, date[1])
+    dump_mutual_fund_data(columns, rows, return_list, mutual_fund_output_file, dump_mutual_funds_to_file, date[1])
 
 #Sectoral Analysis Function Implementations
 

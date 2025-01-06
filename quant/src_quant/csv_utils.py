@@ -4,6 +4,11 @@ from datetime import date
 
 import pandas as pd
 
+def get_csv_columns(file_path):
+    df = pd.read_csv(file_path)
+    column_names = df.columns
+    return column_names
+
 def read_csv_row_number(file_path, row_number):
     df = pd.read_csv(file_path)
     if row_number < len(df):
@@ -106,8 +111,8 @@ def generate_New_csv(in_stocks, sectors, output_file, date_val):
     df = pd.DataFrame({'Stocks': stocks_dictionary.keys(), 'Sector': sectors, 'Frequency' :stocks_dictionary.values()})
     df.to_csv(output_file, index=False, header=True)
 
-def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_mutual_funds_to_file, date):
-    existing_date_list = []
+def dump_mutual_fund_data(column_list, data_list, return_list, mutual_fund_output_file, dump_mutual_funds_to_file, date):
+    date_list = []
 
     if dump_mutual_funds_to_file == False:
         return 
@@ -115,19 +120,25 @@ def dump_mutual_fund_data(column_list, data_list, mutual_fund_output_file, dump_
     header_flag = False
     mode_flag = 'a' #Append
  
-    
+    #File does not exist
     # Check if the file does not exist, add header to the csv file
     if not os.path.exists(mutual_fund_output_file):
         header_flag = True
         mode_flag = 'w'
+        df = pd.DataFrame(data_list, columns=column_list)
+        df.to_csv(mutual_fund_output_file, index=False, header=header_flag, mode=mode_flag)
+        return
 
+    
     #File exists
 
     #Check if latest data is present. If yes skip
     if os.path.exists(mutual_fund_output_file):
-        existing_date_list = read_csv_row_number(mutual_fund_output_file, 0)
-        if date in  existing_date_list:
+        date_list = get_csv_columns(mutual_fund_output_file)
+        if date in  date_list:
             return
 
-    df = pd.DataFrame(data_list, columns=column_list)
+    
+    df = pd.read_csv(dmutual_fund_output_file)
+    df[date] = return_list
     df.to_csv(mutual_fund_output_file, index=False, header=header_flag, mode=mode_flag)
