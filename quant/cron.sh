@@ -1,2 +1,2 @@
 bash install-ta-Lib.sh
-python src/main.py
+python /home/jyotishkardey/quant/src_quant/main.py
