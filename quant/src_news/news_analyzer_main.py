@@ -1,19 +1,7 @@
 import feedparser
 from datetime import datetime, timedelta
 from settings import *
-
-
-def dump_to_file(article):
-    if dump_to_file == False:
-        return
-
-    # Write the recent articles to a file
-    with open(file_name, "w", encoding="utf-8") as file:
-        file.write(f"Title: {article['title']}\n")
-        file.write(f"Link: {article['link']}\n")
-        file.write(f"Published: {article['published']}\n\n")
-
-
+from utils     import *
 
 def main():
     # Parse the RSS feed
