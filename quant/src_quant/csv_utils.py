@@ -117,7 +117,7 @@ def dump_mutual_fund_data(column_list, data_list, return_list, mutual_fund_outpu
     if dump_mutual_funds_to_file == False:
         return 
 
-    header_flag = False
+    header_flag = True
     mode_flag = 'w' #Write
  
     #File does not exist
