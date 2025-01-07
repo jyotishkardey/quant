@@ -46,3 +46,16 @@ sudo service cron status
 ==================================================================================
 
 
+
+================= TROUBLE SHOOTING AI Model =================
+Python packages
+1. pip install jupyter
+2. pip install phidata yfinance googlesearch-python
+3. pip install pycountry
+4. pip install google-genai
+5. pip install google-generativeai
+
+
+Enable Google Gemini api
+https://www.youtube.com/watch?v=BKT1CyXrfks
+==================================================================================
