@@ -26,7 +26,7 @@ def generateTrendingStocks():
         if count != 0:
             trending_stocks[stock] = count
 
-    trending_stocks_df = pd.DataFrame({'Stock': trending_stocks.keys(), 'Frequncy':trending_stocks.values()})
+    trending_stocks_df = pd.DataFrame({'Stocks': trending_stocks.keys(), 'Frequncy':trending_stocks.values()})
     print("============================")
     print(trending_stocks_df)
     trending_stocks_df.to_csv(trending_stocks_output_file, index=False, header=True)
