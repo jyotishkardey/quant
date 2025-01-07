@@ -118,7 +118,7 @@ def dump_mutual_fund_data(column_list, data_list, return_list, mutual_fund_outpu
         return 
 
     header_flag = False
-    mode_flag = 'a' #Append
+    mode_flag = 'w' #Write
  
     #File does not exist
     # Check if the file does not exist, add header to the csv file
