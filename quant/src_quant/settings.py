@@ -64,7 +64,7 @@ indian_sectoral_indices = [
 ]
 
 periods = [5, 15, 30, 90]  # 5 days, 15 days, 1 month (30 days), 3 months (90 days)
-filename = 'home/jyotishkardey/quant/out/sector_returns.csv'
+filename = '/home/jyotishkardey/quant/out/sector_returns.csv'
 
 mutual_fund_output_file = "/home/jyotishkardey/quant/out/fund_analysis.csv"
 fund_names = ['Motilal Oswal Flexicap',
