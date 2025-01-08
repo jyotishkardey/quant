@@ -1,0 +1,1 @@
+stocks_input_data = "stocks_analysis.csv"
