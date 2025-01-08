@@ -174,11 +174,12 @@ def analyze_mutual_funds():
         #Get 1 year data
         if ticker_symbol == 'NIFTY_TOTAL_MKT.NS':
             data = ticker.history(interval='1d', period='1d')
+            data['Daily_Return'] = round(((data['Open'] - data['Close'])/data['Open']) * 100, 2)
         else:
             data = ticker.history(interval='1d', start=start_date, end=end_date)
-
-        # Calculate percetage daily returns and round it to 2 decimal places
-        data['Daily_Return'] = round(data['Close'].pct_change() * 100, 2)
+            # Calculate percetage daily returns and round it to 2 decimal places
+            data['Daily_Return'] = round(data['Close'].pct_change() * 100, 2)
+        
         
         if i == 1:
             # The Date column might not be explicitly present in the DataFrame. 
