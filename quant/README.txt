@@ -55,6 +55,7 @@ Python packages
 4. pip install google-genai
 5. pip install google-generativeai
 6. Search and interpret news articles.
+7. pip install crawl4ai
 
 
 Enable Google Gemini api
