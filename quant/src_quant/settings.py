@@ -1,6 +1,6 @@
 #Stocks
 dump_stock_to_file = True
-stocks_output_file = "/home/jyotishkardey/quant/out/stoks_analysis.csv"
+stocks_output_file = "/home/jyotishkardey/quant/out/stocks_analysis.csv"
 input_data='/home/jyotishkardey/quant/ind_nifty500list.csv'
 
 #WhatsApp Settings
