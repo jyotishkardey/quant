@@ -1,6 +1,6 @@
 #Stocks
 dump_stock_to_file = True
-stocks_output_file = "/home/jyotishkardey/quant/stoks_analysis.csv"
+stocks_output_file = "/home/jyotishkardey/quant/out/stoks_analysis.csv"
 input_data='/home/jyotishkardey/quant/ind_nifty500list.csv'
 
 #WhatsApp Settings
@@ -66,7 +66,7 @@ indian_sectoral_indices = [
 periods = [5, 15, 30, 90]  # 5 days, 15 days, 1 month (30 days), 3 months (90 days)
 filename = '../sector_returns.csv'
 
-mutual_fund_output_file = "/home/jyotishkardey/quant/fund_analysis.csv"
+mutual_fund_output_file = "/home/jyotishkardey/quant/out/fund_analysis.csv"
 fund_names = ['Motilal Oswal Flexicap',
  'Invesco Focused Fund', 
  'Quant Flexicap', 

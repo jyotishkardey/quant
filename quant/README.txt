@@ -54,6 +54,7 @@ Python packages
 3. pip install pycountry
 4. pip install google-genai
 5. pip install google-generativeai
+6. Search and interpret news articles.
 
 
 Enable Google Gemini api
