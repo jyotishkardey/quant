@@ -158,7 +158,7 @@ def analyze_mutual_funds():
     displayed_funds = []
     rows            = []
     row             = []
-    columns         = ['Fund Name']
+    columns         = ['Fund_Names']
     return_list  = []
 
     #Get 1 year time frame
