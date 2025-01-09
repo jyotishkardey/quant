@@ -139,7 +139,7 @@ def analyze_stoks():
         if(len(messageBody) > 1000):
             sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
             messageBody = ""
-    df = pd.DataFrame({'Stocks': filtered_stocks, 'Sector': filtered_sector})
+    df = pd.DataFrame({'Company_Names': filtered_stocks, 'Sector': filtered_sector})
     print(df)
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
     update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_data_to_file, date_val)

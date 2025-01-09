@@ -49,7 +49,7 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_va
     if not os.path.exists(output_file):
         generate_New_csv(stocks, sectors, output_file, date_val)
     else:
-        stock_column = read_csv_column(output_file,'Stocks')
+        stock_column = read_csv_column(output_file,'Company_Names')
         frequency_column = read_csv_column(output_file,'Frequency')
         sector_column = read_csv_column(output_file,'Sector')
 
@@ -96,7 +96,7 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_va
 
         #Add the date since it was deleted from dictionary and population of stocks is completed
         stock_dict['Date'] = date_val
-        df = pd.DataFrame({'Stocks': stock_dict.keys(), 'Sector': sector_column, 'Frequency' :stock_dict.values()})
+        df = pd.DataFrame({'Company_Names': stock_dict.keys(), 'Sector': sector_column, 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
 def generate_New_csv(in_stocks, sectors, output_file, date_val):
