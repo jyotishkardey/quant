@@ -41,20 +41,23 @@ def read_csv(file, column, suffix):
     
     return ret
 
-def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_val):
+def update_frequencies(stocks, tickers, sectors, output_file, dump_stock_to_file, date_val):
     if dump_stock_to_file == False:
         return
 
     # Check if the file does not exist
     if not os.path.exists(output_file):
-        generate_New_csv(stocks, sectors, output_file, date_val)
+        generate_New_csv(stocks, tickers, sectors, output_file, date_val)
     else:
         stock_column = read_csv_column(output_file,'Company_Names')
         frequency_column = read_csv_column(output_file,'Frequency')
         sector_column = read_csv_column(output_file,'Sector')
+        ticker_column = read_csv_column(output_file,'Ticker_Symbols')
 
         new_entrant_stocks = []
         new_entrant_sector = []
+        new_entrant_ticker = []
+
         current_date = ""
 
         stock_dict = {}
@@ -71,6 +74,7 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_va
         del stock_dict['Date']
         #Remove the corresponding field from sector column
         sector_column.pop()
+        ticker_column.pop()
             
         
         i = 0
@@ -84,6 +88,7 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_va
             else:
                 new_entrant_stocks.append(stock)
                 new_entrant_sector.append(sectors[i-1])
+                new_entrant_ticker.append(tickers[i-1])
 
         #Dump the new stocks which were not in csv to the dictionary
         for stock in new_entrant_stocks:
@@ -94,12 +99,16 @@ def update_frequencies(stocks, sectors, output_file, dump_stock_to_file, date_va
         sector_column = sector_column + new_entrant_sector
         sector_column.append('NULL') # For Date field
 
+        #Similar for ticker symbol
+        ticker_column = ticker_column + new_entrant_ticker
+        ticker_column.append('NULL') # For Date field
+
         #Add the date since it was deleted from dictionary and population of stocks is completed
         stock_dict['Date'] = date_val
-        df = pd.DataFrame({'Company_Names': stock_dict.keys(), 'Sector': sector_column, 'Frequency' :stock_dict.values()})
+        df = pd.DataFrame({'Company_Names': stock_dict.keys(), 'Ticker_Symbols': ticker_column, 'Sector': sector_column, 'Frequency' :stock_dict.values()})
         df.to_csv(output_file, index=False, header=True)
 
-def generate_New_csv(in_stocks, sectors, output_file, date_val):
+def generate_New_csv(in_stocks, tickers, sectors, output_file, date_val):
     stocks = in_stocks.copy()
     stocks_dictionary = {}
     
@@ -107,8 +116,9 @@ def generate_New_csv(in_stocks, sectors, output_file, date_val):
         stocks_dictionary[stock] = 1
     stocks_dictionary['Date'] = date_val
     sectors.append('NULL') # To make lists of same length
+    tickers.append('NULL')  # To make lists of same length
     # Convert the dictionary to a DataFrame
-    df = pd.DataFrame({'Stocks': stocks_dictionary.keys(), 'Sector': sectors, 'Frequency' :stocks_dictionary.values()})
+    df = pd.DataFrame({'Company_Names': stocks_dictionary.keys(), 'Ticker_Symbols': tickers, 'Sector': sectors, 'Frequency' :stocks_dictionary.values()})
     df.to_csv(output_file, index=False, header=True)
 
 def dump_mutual_fund_data(column_list, data_list, return_list, mutual_fund_output_file, dump_mutual_funds_to_file, date):

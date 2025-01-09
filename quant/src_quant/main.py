@@ -93,6 +93,7 @@ def analyze_stoks():
     industry_column = read_csv_column(input_data,'Industry')
     filtered_stocks = []
     filtered_sector = []
+    filtered_ticker_symbols = []
     date_val = ""
     dump_data_to_file = dump_stock_to_file
 
@@ -129,6 +130,7 @@ def analyze_stoks():
         if factor_momentum(data) and factor_volatility(ticker):
             filtered_stocks.append(company_names_column[i-1])
             filtered_sector.append(industry_column[i-1])
+            filtered_ticker_symbols.append(stock)
 
     print("============================STOCK RESULTS========================")
     i = 0
@@ -142,7 +144,7 @@ def analyze_stoks():
     df = pd.DataFrame({'Company_Names': filtered_stocks, 'Sector': filtered_sector})
     print(df)
     sendWhatsAppNotification(messageBody,enable_whatsapp_Notification)
-    update_frequencies(filtered_stocks, filtered_sector, stocks_output_file, dump_data_to_file, date_val)
+    update_frequencies(filtered_stocks, filtered_ticker_symbols, filtered_sector, stocks_output_file, dump_data_to_file, date_val)
 
 
 #########MUTUAL FUND APIs########
