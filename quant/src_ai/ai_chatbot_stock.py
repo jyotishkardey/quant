@@ -13,14 +13,18 @@ from ai_swot_analyzer import swot_team
 from ai_sentiment_analyzer import sentiment_team
 from ai_settings import *
 
+
 def delete_old_memory():
+    # Path to the directory you want to delete
+    folder_path = 'tmp'
+
     # Check if the folder exists
-    if os.path.exists(db_file_path):
+    if os.path.exists(folder_path):
         # Delete the folder and its contents
-        shutil.remove(db_file_path)
-        print(f"File '{db_file_path}' has been deleted.")
+        shutil.rmtree(folder_path)
+        print(f"Folder '{folder_path}' has been deleted.")
     else:
-        print(f"FIle '{db_file_path}' does not exist.")
+        print(f"Folder '{folder_path}' does not exist.")
 
 
 #Delet old memory before training. So that it works on fresh data
@@ -34,7 +38,7 @@ ram = SqlAgentStorage(
     # store sessions in the ai.sessions table
     table_name="agent_sessions",
     # db_file: Sqlite database file
-    db_file=db_file_path,
+    db_file="/tmp/stocks.db",
 )
 
 # Team of Agents
