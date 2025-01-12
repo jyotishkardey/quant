@@ -94,3 +94,7 @@ mutual_fund_ticker_symbols = ['0P00012ZRM.BO',
 '0P0000XVL2.BO',
 'NIFTY_TOTAL_MKT.NS',
 '0P0000YWL1.BO',]
+
+
+if __name__ == "__main__":
+    print('Quant Settings Module Invoked')

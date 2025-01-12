@@ -18,4 +18,6 @@ def sendWhatsAppNotification(messageBody,enable_whatsapp_Notification):
     to="whatsapp:+919836820018",
     )
     
-    #print(message.body)
+    #
+if __name__ == "__main__":
+    print('Quant WhatsApp Module Invoked')

@@ -152,3 +152,6 @@ def dump_mutual_fund_data(column_list, data_list, return_list, mutual_fund_outpu
     df = pd.read_csv(mutual_fund_output_file)
     df[date] = return_list
     df.to_csv(mutual_fund_output_file, index=False, header=header_flag, mode=mode_flag)
+
+if __name__ == "__main__":
+    print('Quant CSV Module Invoked')

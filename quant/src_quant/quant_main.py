@@ -265,12 +265,13 @@ def calculate_sectoral_return(sectors, periods, filename):
     # Save DataFrame to CSV
     returns_df.to_csv(filename)
 
-#STOCKS
-analyze_stoks()
+if __name__ == "__main__":
+    #STOCKS
+    analyze_stoks()
 
-#MUTUAL FUNDS
-analyze_mutual_funds()
+    #MUTUAL FUNDS
+    analyze_mutual_funds()
 
-#Sectoral Analysis
-calculate_sectoral_return(indian_sectoral_indices, periods, filename)
+    #Sectoral Analysis
+    calculate_sectoral_return(indian_sectoral_indices, periods, filename)
 
