@@ -5,9 +5,9 @@ from datetime import datetime
 import heapq
 
 #Utility APIS
-from csv_utils import *
-from whatsApp  import *
-from settings  import *
+from quant_csv_utils import *
+from quant_whatsApp  import *
+from quant_settings  import *
 
 # Function to check if the stock is in uptrend for the last week, 15 days and 1 month
 def is_uptrend(data):
