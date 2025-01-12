@@ -13,7 +13,7 @@ def article_file_exists():
     # Get the current date and time
     current_date = datetime.now().date()
 
-    appended_file_name = file_name + str(current_date)
+    appended_file_name = file_name + str(current_date) +"*.txt"
 
     if os.path.exists(appended_file_name):
         print(f"\n\n\nThe file{file_name} exits. Skipping")
@@ -27,7 +27,7 @@ def dump_to_file(article):
 
     # Get the current date and time and populate file name
     current_date = datetime.now().date()
-    appended_file_name = file_name + str(current_date)
+    appended_file_name = file_name + str(current_date) +".txt"
 
     # Write the recent articles to a file
     with open(appended_file_name, "a", encoding="utf-8") as file:

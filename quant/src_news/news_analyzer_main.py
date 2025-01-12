@@ -10,7 +10,7 @@ def generateTrendingStocks():
     count = 0
 
     current_date = datetime.now().date()
-    appended_file_name = file_name + str(current_date)
+    appended_file_name = file_name + str(current_date) +".txt"
     '''
     if os.path.exists(appended_file_name):
         print(f"\n\n\nThe file{file_name} exits. Skipping")
@@ -67,8 +67,5 @@ def main():
     if not recent_articles:
         print("No recent articles found that are less than 5 days old.")
 
-    if enable_file_dump == False:
-        print("\n\n\n SKIPPING FILE DUMP AS FILE ALREADY EXISTS")
-
-
-main()
+if __name__ == "__main__":
+    main()
